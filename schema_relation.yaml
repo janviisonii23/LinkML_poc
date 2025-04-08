@@ -1,0 +1,989 @@
+id: https://w3id.org/myorg/registry-schema
+prefixes:
+  linkml: https://w3id.org/linkml/
+  schema: http://schema.org/
+  registry: http://yourdomain.org/schemas/registry/
+default_prefix: registry
+imports:
+  - linkml:types
+name: registry_resource_schema
+description: A schema to represent registry resources from the given JSON data.
+slots:
+  has_supercategory:
+    domain: Item
+    range: Supercategory
+    multivalued: true
+    alias: supercategory # Maps to JSON property
+
+  has_content_type:
+    domain: Item
+    range: ContentType
+    multivalued: true
+    alias: contentTypes # Maps to JSON property
+
+  has_synonym:
+    domain: Item
+    range: Synonym
+    multivalued: true
+    alias: synonyms # Maps to JSON property
+
+  has_type:
+    domain: Item
+    range: Type
+    multivalued: true
+    alias: types # Maps to JSON property
+
+  has_availability:
+    domain: Item
+    range: Availability
+    multivalued: true
+    alias: availability # Maps to JSON property
+
+  has_abbreviation:
+    domain: Item
+    range: Abbreviation
+    multivalued: true
+    alias: abbreviations # Maps to JSON property
+
+  has_alternate_identifier:
+    domain: Item
+    range: AlternateIdentifier
+    multivalued: true
+    alias: alternateIdentifiers # Maps to JSON property
+
+  has_keyword:
+    domain: Item
+    range: Keyword
+    multivalued: true
+    alias: keywords # Maps to JSON property
+
+  has_current_distribution:
+    domain: Distributions
+    range: URLReference
+    multivalued: true
+    alias: current # Maps to Neo4j relationship
+
+  has_deprecated_distribution:
+    domain: Distributions
+    range: URLReference
+    multivalued: true
+    alias: deprecated
+
+  has_alternate_distribution:
+    domain: Distributions
+    range: URLReference
+    multivalued: true
+    alias: alternate
+
+  has_uniqueness:
+    domain: RRID
+    range: string
+    alias: is_unique # Maps to Neo4j property
+
+  has_hierarchy:
+    domain: Organization
+    range: Hierarchy
+    alias: hierarchy
+
+  has_children:
+    domain: Hierarchy
+    range: Children
+    multivalued: true
+    inverse: is_child_of
+    alias: children
+
+  has_descendants:
+    domain: Hierarchy
+    range: Descendants
+    multivalued: true
+    inverse: is_descendant_of
+    alias: descendants
+
+  has_ancestors:
+    domain: Hierarchy
+    range: Ancestors
+    multivalued: true
+    inverse: is_ancestor_of
+    alias: ancestors
+
+  has_parent_hierachy:
+    domain: Hierarchy
+    range: Parent
+    multivalued: true
+    inverse: is_parent_of
+    alias: parent
+
+  has_curie_children:
+    domain: Children
+    range: string
+    alias: curie
+  has_curie_descendent:
+    domain: Descendants
+    range: string
+    alias: curie
+  has_curie_ancestor:
+    domain: Ancestors
+    range: string
+    alias: curie
+  has_curie_parent:
+    domain: Parent
+    range: string
+    alias: curie
+  has_curie_rrid:
+    domain: RRID
+    range: string
+    alias: curie
+  has_curie_validation:
+    domain: ValidationSitesInformation
+    range: string
+    alias: curie
+
+  has_proper_citation:
+    domain: RRID
+    range: string
+    alias: properCitation
+
+  has_ingest_method:
+    domain: Provenance
+    range: string
+    alias: ingestMethod # Maps to Neo4j property
+
+  has_ingest_time:
+    domain: Provenance
+    range: string
+    alias: ingestTime
+
+  has_creation_date:
+    domain: Provenance
+    range: string
+    multivalued: true
+    alias: creationDate
+
+  has_last_seen_date:
+    domain: Provenance
+    range: string
+    alias: lastSeenDate
+
+  has_doc_id:
+    domain: Provenance
+    range: string
+    alias: docId
+
+  has_primary_key:
+    domain: Provenance
+    range: string
+    alias: primaryKey
+
+  has_ingest_target:
+    domain: Provenance
+    range: string
+    alias: ingestTarget
+
+  has_file_pattern:
+    domain: Provenance
+    range: string
+    alias: filePattern
+
+  has_relationship:
+    domain: Graph
+    range: Relationship
+    multivalued: true
+    required: false
+    inverse: is_related_to
+    alias: relationships
+
+  has_child:
+    domain: Graph
+    range: ChildRelationship
+    multivalued: true
+    required: false
+    alias: child
+
+  has_parent:
+    domain: Graph
+    range: ParentRelationship
+    multivalued: true
+    required: false
+    alias: parent
+
+  has_related:
+    domain: Graph
+    range: RelatedRelationship
+    multivalued: true
+    required: false
+    alias: related
+
+  relates_to:
+    domain: Relationship
+    range: RelatedResource
+    inverse: is_related_by
+    alias: resource
+
+  has_relationship_type:
+    domain: Relationship
+    range: RelationshipType
+    alias: relationship
+
+  has_identifier:
+    domain: RelatedResource
+    range: string
+    alias: identifier
+
+  has_name:
+    domain: RelatedResource
+    range: string
+    required: false
+    alias: name
+  has_name_children:
+    domain: Children
+    range: string
+    required: false
+    alias: name
+  has_name_descendent:
+    domain: Descendants
+    range: string
+    required: false
+    alias: name
+  has_name_ancestors:
+    domain: Ancestors
+    range: string
+    required: false
+    alias: name
+  has_name_parent:
+    domain: Parent
+    range: string
+    required: false
+    alias: name
+  has_name_license:
+    domain: License
+    range: string
+    required: false
+    alias: name
+  has_name_validation:
+    domain: ValidationSitesInformation
+    range: string
+    required: false
+    alias: name
+  has_name_species:
+    domain: Species
+    range: string
+    required: false
+    alias: name
+
+  has_related_disease:
+    domain: Diseases
+    range: Disease
+    multivalued: true
+    alias: related
+
+  has_role_disease:
+    domain: Disease
+    range: string
+    alias: role
+  has_role_organism:
+    domain: Organism
+    range: string
+    alias: role
+
+  has_total_resource_mentions:
+    domain: Mentions
+    range: TotalResourceMentions
+    alias: totalResourceMentions
+
+  has_total_rrid_mentions:
+    domain: Mentions
+    range: TotalRRIDMentions
+    alias: totalRRIDMentions
+
+  has_total_mentions:
+    domain: Mentions
+    range: TotalMentions
+    alias: totalMentions
+
+  has_mention_timestamp:
+    domain: Mentions
+    range: string
+    alias: timestamp
+
+  has_availability_2:
+    domain: Mentions
+    range: Availability2
+    alias: availability
+    multivalued: false
+    required: false
+
+  has_count:
+    domain: TotalResourceMentions
+    range: integer
+    alias: count
+  has_count_resourcemention:
+    domain: TotalResourceMentions
+    range: integer
+    alias: count
+  has_count_rridmention:
+    domain: TotalRRIDMentions
+    range: integer
+    alias: count
+  has_count_mentiona:
+    domain: TotalMentions
+    range: integer
+    alias: count
+  has_count_countvalue:
+    domain: CountValue
+    range: integer
+    alias: count
+
+  has_count_issue:
+    domain: TotalIssues
+    range: integer
+    alias: count
+
+  has_keyword_2:
+    domain: Availability2
+    range: string
+    alias: keyword
+
+  has_license:
+    domain: Legal
+    range: License
+    alias: license
+
+  has_terms:
+    domain: Legal
+    range: Terms
+    alias: terms
+
+  has_uris:
+    domain: Terms
+    range: string
+    required: false
+    multivalued: true
+    alias: uris
+
+  has_total_issues:
+    domain: Issues
+    range: TotalIssues
+    alias: totalIssues
+
+  has_status:
+    domain: Issues
+    range: string
+    multivalued: true
+    alias: status
+
+  has_direct_issues:
+    domain: Issues
+    range: Direct
+    multivalued: true
+    required: false
+    alias: direct
+
+  has_comments:
+    domain: Direct
+    range: string
+    alias: comments
+
+  has_comments_validation:
+    domain: ValidationSitesInformation
+    range: string
+    alias: comments
+
+  has_issue:
+    domain: Direct
+    range: string
+    alias: issue
+
+  has_is_validated:
+    domain: Validation
+    range: boolean
+    alias: isValidated
+
+  has_total_validation_sites:
+    domain: Validation
+    range: CountValue
+    alias: totalValidationSites
+
+  has_validation_sites_info:
+    domain: Validation
+    range: ValidationSitesInformation
+    multivalued: true
+    required: false
+    alias: validationSitesInformation
+
+  has_provider_id:
+    domain: ValidationSitesInformation
+    range: string
+    alias: provider_id
+
+  has_uri:
+    domain: ValidationSitesInformation
+    range: string
+    alias: uri
+
+  has_related_organism:
+    domain: Organisms
+    range: Organism
+    multivalued: true
+    alias: related
+
+  has_species:
+    domain: Organism
+    range: Species
+    alias: species
+
+  is_child_of:
+    description: Inverse of has_children
+    domain: Children
+    range: Hierarchy
+    multivalued: true
+    inverse: has_children
+
+  is_descendant_of:
+    description: Inverse of has_descendants
+    domain: Descendants
+    range: Hierarchy
+    multivalued: true
+    inverse: has_descendants
+
+  is_ancestor_of:
+    description: Inverse of has_ancestors
+    domain: Ancestors
+    range: Hierarchy
+    multivalued: true
+    inverse: has_ancestors
+
+  is_parent_of:
+    description: Inverse of has_parent_hierachy
+    domain: Parent
+    range: Hierarchy
+    multivalued: true
+    inverse: has_parent_hierachy
+
+  # Graph relationship inverses
+  is_related_to:
+    description: Inverse of has_relationship
+    domain: RelatedResource
+    range: Graph
+    multivalued: true
+    inverse: has_relationship
+
+  # Resource relationship inverses
+  is_related_by:
+    description: Inverse of relates_to
+    domain: RelatedResource
+    range: Relationship
+    inverse: relates_to
+
+  has_item:
+    description: Details about the item.
+    domain: ResourceSource
+    range: Item
+    required: true
+    alias: item
+
+  has_authority:
+    description: Authority responsible for the resource.
+    domain: ResourceSource
+    range: Authority
+    alias: authority
+
+  has_distributions:
+    description: Different types of distributions available for the resource.
+    domain: ResourceSource
+    range: Distributions
+    alias: distributions
+
+  has_rrid:
+    description: Resource Identifier details.
+    domain: ResourceSource
+    range: RRID
+    alias: rrid
+
+  has_provenance:
+    description: Provenance metadata about the resource.
+    domain: ResourceSource
+    range: Provenance
+    alias: provenance
+
+  has_disco:
+    domain: ResourceSource
+    range: Disco
+    alias: disco
+
+  has_graph:
+    domain: ResourceSource
+    range: Graph
+    alias: graph
+
+  has_diseases:
+    domain: ResourceSource
+    range: Diseases
+    alias: diseases
+
+  has_supportingAwards:
+    domain: ResourceSource
+    range: supportingAwards
+    multivalued: true
+    alias: supportingAwards
+
+  has_references:
+    description: References related to the resource.
+    domain: ResourceSource
+    range: References
+    multivalued: true
+    alias: references
+
+  has_organisms:
+    domain: ResourceSource
+    range: Organisms
+    alias: organisms
+
+  has_dataItem:
+    domain: ResourceSource
+    range: DataItem
+    alias: dataItem
+
+  has_mentions:
+    domain: ResourceSource
+    range: Mentions
+    multivalued: true
+    alias: mentions
+
+  has_organization:
+    domain: ResourceSource
+    range: Organization
+    alias: organization
+
+  has_recordValid:
+    domain: ResourceSource
+    range: boolean
+    alias: recordValid
+
+  has_legal:
+    domain: ResourceSource
+    range: Legal
+    alias: legal
+
+  has_issues:
+    domain: ResourceSource
+    range: Issues
+    alias: issues
+
+  has_validation:
+    domain: ResourceSource
+    range: Validation
+    alias: validation
+
+  has_agency:
+    domain: supportingAwards
+    range: Agency
+    alias: agency
+  has_name_agency:
+    domain: Agency
+    range: string
+    alias: name
+  has_identifier_agency:
+    domain: Agency
+    range: string
+    alias: identifier
+
+classes:
+  ResourceSource:
+    tree_root: true
+    description: Contains various metadata about a resource
+    slots:
+      - has_item
+      - has_authority
+      - has_distributions
+      - has_rrid
+      - has_provenance
+      - has_disco
+      - has_graph
+      - has_diseases
+      - has_supportingAwards
+      - has_references
+      - has_organisms
+      - has_dataItem
+      - has_mentions
+      - has_organization
+      - has_recordValid
+      - has_legal
+      - has_issues
+      - has_validation
+
+  Item:
+    description: Represents details about the registry resource.
+    attributes:
+      name:
+        description: Name of the resource.
+        range: string
+      description:
+        description: Description of the resource.
+        range: string
+      language:
+        description: Language used in the resource.
+        range: string
+      identifier:
+        description: Unique identifier.
+        range: string
+      docid:
+        description: Document ID.
+        range: string
+      uuid:
+        description: Unique identifier in UUID format.
+        range: string
+      curie:
+        range: string
+        required: true
+
+    slots:
+      - has_supercategory
+      - has_content_type
+      - has_synonym
+      - has_type
+      - has_availability
+      - has_abbreviation
+      - has_alternate_identifier
+      - has_keyword
+
+  Keyword:
+    description: Keywords related to the resource
+    attributes:
+      keyword:
+        description: The keyword
+        range: string
+
+  AlternateIdentifier:
+    description: Alternate identifier for a resource
+    attributes:
+      identifier:
+        description: The alternate identifier
+        range: string
+
+  Abbreviation:
+    description: Abbreviation of the resource
+    attributes:
+      name:
+        description: Abbreviated name
+        range: string
+
+  Authority:
+    description: Represents the authority managing the resource.
+    attributes:
+      name:
+        description: Name of the authority.
+        range: string
+
+  Distributions:
+    description: Contains different distribution URLs.
+    slots:
+      - has_current_distribution
+      - has_deprecated_distribution
+      - has_alternate_distribution
+
+  RRID:
+    description: Contains RRID (Research Resource Identifier) metadata.
+    slots:
+      - has_uniqueness
+      - has_curie_rrid
+      - has_proper_citation
+
+  Provenance:
+    description: Metadata about how the resource was ingested.
+    slots:
+      - has_ingest_method
+      - has_ingest_time
+      - has_creation_date
+      - has_last_seen_date
+      - has_doc_id
+      - has_primary_key
+      - has_ingest_target
+      - has_file_pattern
+
+  Supercategory:
+    description: Represents the supercategory of a resource.
+    attributes:
+      name:
+        description: Supercategory name.
+        range: string
+      type:
+        description: type pf category
+        range: string
+
+  ContentType:
+    description: Represents the type of content.
+    attributes:
+      curie:
+        description: CURIE of the content type.
+        range: string
+      name:
+        description: Name of the content type.
+        range: string
+
+  Synonym:
+    description: Represents a synonym for a resource.
+    attributes:
+      name:
+        description: Synonym name.
+        range: string
+
+  Type:
+    description: Represents the type/category of the resource.
+    attributes:
+      name:
+        description: Type name.
+        range: string
+      type:
+        description: Category type.
+        range: string
+
+  Availability:
+    description: Represents the availability status of the resource.
+    attributes:
+      description:
+        description: Description of availability.
+        range: string
+      keyword:
+        description: Availability keyword.
+        range: string
+
+  URLReference:
+    description: Represents a reference to a URL.
+    attributes:
+      type:
+        description: Type of the URL (e.g., landing page, deprecated, alternate).
+        range: string
+      uri:
+        description: URL reference.
+        range: string
+
+  Disco:
+    description: Disco metadata
+    attributes:
+      v_uuid:
+        description: Unique identifier for disco
+        range: string
+
+  supportingAwards:
+    slots:
+      - has_agency
+
+  Agency:
+    slots:
+      - has_identifier_agency
+      - has_name_agency
+
+  Graph:
+    description: Graph relationships metadata
+    slots:
+      - has_relationship
+      - has_child
+      - has_parent
+      - has_related
+
+  RelatedRelationship:
+    description: "Non-hierarchical associations"
+    slots:
+      - relates_to
+      - has_relationship_type
+
+  Relationship:
+    description: A relationship between resources
+    slots:
+      - relates_to
+      - has_relationship_type
+
+  ChildRelationship:
+    description: A child-type relationship
+    slots:
+      - relates_to
+      - has_relationship_type
+
+  ParentRelationship:
+    description: A parent-type relationship
+    slots:
+      - relates_to
+      - has_relationship_type
+
+  RelatedResource:
+    description: Details of a related resource
+    slots:
+      - has_identifier
+      - has_name
+      - is_related_to
+      - is_related_by
+
+  RelationshipType:
+    description: Type of relationship between resources
+    slots:
+      - has_identifier
+      - has_name
+
+  Diseases:
+    description: Disease-related metadata
+    slots:
+      - has_related_disease
+
+  Disease:
+    description: Disease metadata
+    attributes:
+      name:
+        range: string
+    slots:
+      - has_role_disease
+
+  References:
+    description: References related to the resource
+    attributes:
+      curie:
+        description: Reference identifier
+        range: string
+
+  DataItem:
+    description: Data items associated with the resource
+    attributes:
+      dataTypes:
+        description: List of data types
+        range: string
+        multivalued: true
+
+  Organisms:
+    description: Organisms related to the resource
+    slots:
+      - has_related_organism
+
+  Organism:
+    description: Organism entity
+    slots:
+      - has_role_organism
+      - has_species
+
+  Species:
+    description: Species classification
+    slots:
+      - has_name_species
+
+  Mentions:
+    description: Information about mentions of the resource
+    slots:
+      - has_total_resource_mentions
+      - has_total_rrid_mentions
+      - has_total_mentions
+      - has_mention_timestamp
+      - has_availability_2
+
+  TotalResourceMentions:
+    description: Stores count of resource mentions
+    slots:
+      - has_count_resourcemention
+
+  TotalRRIDMentions:
+    description: Stores count of RRID mentions
+    slots:
+      - has_count_rridmention
+
+  TotalMentions:
+    description: Stores count of total mentions
+    slots:
+      - has_count_mentiona
+
+  Availability2:
+    description: Availability metadata
+    slots:
+      - has_keyword_2
+
+  Organization:
+    description: Organization details
+    slots:
+      - has_hierarchy
+
+  Hierarchy:
+    description: Organization hierarchy
+    slots:
+      - has_children
+      - has_descendants
+      - has_ancestors
+      - has_parent_hierachy
+
+  Children:
+    description: Child organizations
+    slots:
+      - has_curie_children
+      - has_name_children
+      - is_child_of
+
+  Descendants:
+    description: Descendant organizations
+    slots:
+      - has_curie_descendent
+      - has_name_descendent
+      - is_descendant_of
+
+  Ancestors:
+    description: Ancestor organizations
+    slots:
+      - has_curie_ancestor
+      - has_name_ancestors
+      - is_ancestor_of
+
+  Parent:
+    description: Parent organization
+    slots:
+      - has_curie_parent
+      - has_name_parent
+      - is_parent_of
+
+  Legal:
+    description: Legal information associated with the resource
+    slots:
+      - has_license
+      - has_terms
+
+  License:
+    description: License information
+    slots:
+      - has_name_license
+
+  Terms:
+    description: Terms of use information
+    slots:
+      - has_uris
+
+  Issues:
+    description: Issues associated with the resource
+    slots:
+      - has_total_issues
+      - has_status
+      - has_direct_issues
+
+  TotalIssues:
+    description: Total number of issues
+    slots:
+      - has_count_issue
+
+  Direct:
+    description: Direct issue details
+    slots:
+      - has_comments
+      - has_issue
+
+  Validation:
+    description: Validation information for the resource
+    slots:
+      - has_is_validated
+      - has_total_validation_sites
+      - has_validation_sites_info
+
+  ValidationSitesInformation:
+    description: Information about validation sites
+    slots:
+      - has_comments_validation
+      - has_curie_validation
+      - has_name_validation
+      - has_provider_id
+      - has_uri
+
+  CountValue:
+    description: A simple count representation
+    slots:
+      - has_count_countvalue
