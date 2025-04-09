@@ -2,7 +2,6 @@ import requests
 import json
 from tqdm import tqdm
 
-# Replace with your API Key and Index Name
 API_KEY = "m87W6pSKYjoGuU59BsUOQuwwvVJHG8We"
 INDEX_NAME = "RIN_Tool_pr"
 BASE_URL = f"https://api.scicrunch.io/elastic/v1/{INDEX_NAME}"
@@ -16,7 +15,6 @@ def fetch_all_records():
     all_records = []
     total_records = 0
 
-    # Step 1: Initialize Scroll Query (First Request)
     payload = {
         "size": 1000,  # Number of results per request
         "query": {"match_all": {}}
@@ -39,7 +37,6 @@ def fetch_all_records():
     all_records.extend(hits)
     print(f"Fetched {total_records} records...")
 
-    # Step 2: Continue Fetching Using Scroll ID
     with tqdm(desc="Downloading Data", unit=" records") as pbar:
         while hits:
             payload = {
@@ -68,7 +65,7 @@ def fetch_all_records():
     with open("rin_data.json", "w") as f:
         json.dump(all_records, f, indent=4)
 
-    print(f"\n✅ Download complete! {total_records} records saved to rin_data.json")
+    print(f"\nDownload complete! {total_records} ")
 
 if __name__ == "__main__":
     fetch_all_records()
