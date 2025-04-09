@@ -16,7 +16,7 @@ def fetch_all_records():
     total_records = 0
 
     payload = {
-        "size": 1000,  # Number of results per request
+        "size": 1000,
         "query": {"match_all": {}}
     }
     response = requests.post(f"{BASE_URL}/_search?scroll=1m", headers=HEADERS, json=payload)
