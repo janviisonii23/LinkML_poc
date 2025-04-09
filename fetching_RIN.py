@@ -59,9 +59,8 @@ def fetch_all_records():
 
             all_records.extend(hits)
             total_records += len(hits)
-            pbar.update(len(hits))  # Update progress bar
+            pbar.update(len(hits))  
 
-    # Step 3: Save Data to JSON File
     with open("rin_data.json", "w") as f:
         json.dump(all_records, f, indent=4)
 
