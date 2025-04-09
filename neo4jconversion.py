@@ -1,11 +1,10 @@
 import json
 from neo4j import GraphDatabase
 from typing import Any
-from schema_python.model2 import  ResourceSource, slots  # Your generated Python schema
+from schema_python.model2 import  ResourceSource, slots  
 import uuid
 
 
-# Get relationship name from slots defined in Python schema
 def get_relationship_name(domain_cls: str, slot_name: str) -> str:
     for attr_name in dir(slots):
         if attr_name == slot_name:
@@ -59,19 +58,15 @@ if __name__ == '__main__': # Replace with your actual top-level class
         data = json.load(f)
     print("janvi")
 
-    # Parse into Python object
     with driver.session() as session:
-    # Wipe previous data (optional)
         session.run("MATCH (n) DETACH DELETE n")
-        print("🌪️ Cleared old graph.")
 
-    # Loop through each dictionary in the list
         for entry in data:
             try:
                 obj = ResourceSource(**entry)
                 print(f"Processing Resource CURIE: {obj.item.curie}")
                 build_graph(obj, session)
             except Exception as e:
-                print(f"❌ Error processing entry: {e}")
+                print(f"Error: {e}")
 
     driver.close()
